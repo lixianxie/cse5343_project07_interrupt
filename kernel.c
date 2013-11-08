@@ -11,13 +11,16 @@ void handleInterrupt21(int ax, int bx, int cx, int dx);
 int main(){
 	char line[80];
 	char buffer[512];
-	printString("Enter a line: ");
-	readString(line);
+	printString("Enter a line: ");//this part is for step1
+	readString(line);  //this part is for step2
  	printString(line);	
- 	readSector(buffer,30);
+ 	readSector(buffer,30); //this part is for step3
  	printString(buffer);
- 	makeInterrupt21();
- 	interrupt(0x21,0,0,0,0);
+ 	makeInterrupt21();   //this part is for step4
+ 	//interrupt(0x21,0,0,0,0);
+ 	interrupt(0x21,1,line,0,0);//this part is for step5
+ 	interrupt(0x21,0,line,0,0);
+	//interrupt(0x21,3,line,0,0);
 	while(1){
 		//todo
 	}
@@ -71,16 +74,15 @@ void readSector(char* buffer, int sector){
 }
 
 void handleInterrupt21(int ax, int bx, int cx, int dx){
-	printString("hello world\r\n");
-	/*if(ax==0){
+	//printString("hello world\r\n"); //testing in step4
+	if(ax==0){
 		printString(bx);
-		printString("\r\n");
 	}else if(ax==1){
 		readString(bx);
 	}else if(ax==2){
 		readSector(bx,cx);
 	}else{
 		printString("error:invalid int!\r\n");
-	}*/
+	}
 }
 
