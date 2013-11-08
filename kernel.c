@@ -6,17 +6,18 @@ int myDiv(int a, int b);
 void printString(char* str);
 void readString(char* str);
 void readSector(char* buffer, int sector);
-
-	
+void handleInterrupt21(int ax, int bx, int cx, int dx);
 
 int main(){
 	char line[80];
 	char buffer[512];
-	//printString("Enter a line: ");
-	//readString(line);
- 	//printString(line);	
+	printString("Enter a line: ");
+	readString(line);
+ 	printString(line);	
  	readSector(buffer,30);
  	printString(buffer);
+ 	makeInterrupt21();
+ 	interrupt(0x21,0,0,0,0);
 	while(1){
 		//todo
 	}
@@ -69,5 +70,17 @@ void readSector(char* buffer, int sector){
 	interrupt(0x13,2*256+1,buffer,track*256+relativeSector,head*256);
 }
 
-
+void handleInterrupt21(int ax, int bx, int cx, int dx){
+	printString("hello world\r\n");
+	/*if(ax==0){
+		printString(bx);
+		printString("\r\n");
+	}else if(ax==1){
+		readString(bx);
+	}else if(ax==2){
+		readSector(bx,cx);
+	}else{
+		printString("error:invalid int!\r\n");
+	}*/
+}
 
